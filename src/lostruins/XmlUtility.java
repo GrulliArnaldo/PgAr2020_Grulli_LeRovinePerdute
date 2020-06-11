@@ -2,7 +2,7 @@ package lostruins;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +71,7 @@ public class XmlUtility {
 		return citiesMap;
 	}
 	
-	public static void createRouteXmlFile(ArrayList<City> tonatiuh, ArrayList<City> metztli, String fileName) {
+	public static void createRouteXmlFile(Map<Integer, City> map, double[][] tonatiuhMatrix, double[][] metztliMatrix, String fileName) {
 		
 		XMLStreamWriter xmlWriter = initializeXmlWriter(fileName);
 		try {
@@ -80,17 +80,29 @@ public class XmlUtility {
 			//team Tonatiuh
 			xmlWriter.writeStartElement("route");
 			xmlWriter.writeAttribute("team", "Tonatiuh");
-			xmlWriter.writeAttribute("cost", "carburante_speso");
-			xmlWriter.writeAttribute("cities", "numero_città_toccate");
-			//da mettere il ciclo con le città
+			xmlWriter.writeAttribute("cost", Integer.toString((int)tonatiuhMatrix[tonatiuhMatrix.length-1][0]));
+			xmlWriter.writeAttribute("cities", Integer.toString(Route.getCitiesRouteNumber(tonatiuhMatrix, tonatiuhMatrix.length-1)[0]));
+			double[] routeT = Arrays.copyOf(Route.getCitiesRoute(tonatiuhMatrix, tonatiuhMatrix.length-1), Route.getCitiesRouteNumber(tonatiuhMatrix, tonatiuhMatrix.length-1)[0]+2);
+			for(int i = 0; i<routeT.length; i++) {
+				xmlWriter.writeStartElement("city");
+				xmlWriter.writeAttribute("id", Integer.toString((int)routeT[i]));
+				xmlWriter.writeAttribute("name", map.get((int)routeT[i]).getName());
+				xmlWriter.writeEndElement();
+			}
 			xmlWriter.writeEndElement();
 			
 			//team Metztli
 			xmlWriter.writeStartElement("route");
 			xmlWriter.writeAttribute("team", "Metztli");
-			xmlWriter.writeAttribute("cost", "carburante_speso");
-			xmlWriter.writeAttribute("cities", "numero_città_toccate");
-			//da mettere il ciclo con le città
+			xmlWriter.writeAttribute("cost", Integer.toString((int)metztliMatrix[metztliMatrix.length-1][0]));
+			xmlWriter.writeAttribute("cities", Integer.toString(Route.getCitiesRouteNumber(metztliMatrix, metztliMatrix.length-1)[0]));
+			double[] routeM = Arrays.copyOf(Route.getCitiesRoute(metztliMatrix, metztliMatrix.length-1), Route.getCitiesRouteNumber(metztliMatrix, metztliMatrix.length-1)[0]+2);
+			for(int i = 0; i<routeM.length; i++) {
+				xmlWriter.writeStartElement("city");
+				xmlWriter.writeAttribute("id", Integer.toString((int)routeM[i]));
+				xmlWriter.writeAttribute("name", map.get((int)routeM[i]).getName());
+				xmlWriter.writeEndElement();
+			}
 			xmlWriter.writeEndElement(); 
 			
 			xmlWriter.writeEndElement(); //chiusura tag routes

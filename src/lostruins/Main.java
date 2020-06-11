@@ -6,20 +6,19 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Map<Integer, City> citiesList = XmlUtility.extractMapFromXml("PgAr_Map_5.xml");
-
-		for (int i = 0; i<citiesList.size(); i++) {
-			System.out.print(citiesList.get(i).getIndex() + ": " + citiesList.get(i).getName() + " ---> ");
-			System.out.println(String.format("(%d, %d, %d)", citiesList.get(i).getX(), citiesList.get(i).getY(), citiesList.get(i).getH()));
-			for(int j = 0; j<citiesList.get(i).getLinksList().size(); j++)
-				System.out.println(String.format("   %d#: %s", citiesList.get(i).getLinksList().get(j).getIndex(), citiesList.get(i).getLinksList().get(j).getName()));
-		}
+		Map<Integer, City> citiesList = XmlUtility.extractMapFromXml("PgAr_Map_50.xml");
 		
-		Route.printMatrix(Route.getDistanceMatrix(citiesList, false));
+//		Map<Integer, City> citiesListB = XmlUtility.extractMapFromXml("PgAr_Map_200.xml");
 		
-//		XmlUtility.createRouteXmlFile(new ArrayList<City>(), new ArrayList<City>(), "Routes.xml");
+//		for(int i = 0; i<citiesListB.size(); i++) {
+//			System.out.println(String.format("%d# %s(%d,%d,%d)", i, citiesListB.get(i).getName(), citiesListB.get(i).getX(), citiesListB.get(i).getY(), citiesListB.get(i).getH()));
+//			for (int j = 0; j < citiesListB.get(i).getLinksList().size(); j++)
+//				System.out.println(String.format("   %d ---> %s", citiesListB.get(i).getLinksList().get(j).getIndex(), citiesListB.get(i).getLinksList().get(j).getName()));
+//		}
 		
-		System.out.printf("%nProgram closed successfully!");
+		XmlUtility.createRouteXmlFile(citiesList, Route.getDistanceMatrix(citiesList, true), Route.getDistanceMatrix(citiesList, false), "Routes.xml");
+		
+		System.out.println("File Routes.xml was created successfully!");
 	}
 
 }
