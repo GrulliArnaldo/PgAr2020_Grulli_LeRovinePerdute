@@ -23,6 +23,8 @@ public class Route {
 		//inizializzo il pointer a 0 (città di partenza) e la distanza a 0.0
 		int pointer = 0;
 		double distance = 0.0;
+		//count serve per far finire il ciclo anche nel caso ci fossero città a cui non si può arrivare dalla città iniziale
+		int count = 0;
 		//creo una mappa per tener conto delle città già "lavorate"
 		TreeMap<Integer, Boolean> checked = new TreeMap<Integer, Boolean>();
 		for(int i = 0; i<map.size(); i++)
@@ -49,12 +51,13 @@ public class Route {
 					}
 				}
 			}
+			count++;
 			//imposto il valore della città appena "lavorata" a true
 			checked.put(pointer, true);
 			//imposto il pointer alla città con la distanza minore ancora non lavorata
 			pointer = getColumnMin(matrix, checked);
 			//si può uscire dal ciclo solo se sono state scartate tutte le città
-		}while(checkAllCheckedMap(checked) == false);
+		}while(checkAllCheckedMap(checked) == false && count<map.size());
 		
 		return matrix;
 	}

@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Map<Integer, City> citiesList = XmlUtility.extractMapFromXml("PgAr_Map_50.xml");
+		Map<Integer, City> citiesList = XmlUtility.extractMapFromXml("PgAr_Map_200.xml");
 		
 //		Map<Integer, City> citiesListB = XmlUtility.extractMapFromXml("PgAr_Map_200.xml");
 		
